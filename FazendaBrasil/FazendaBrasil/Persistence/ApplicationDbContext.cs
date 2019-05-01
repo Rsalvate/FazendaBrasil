@@ -25,6 +25,9 @@ namespace FazendaBrasil.Persistence
 
             modelBuilder.Entity<CattleAnimal>()
                 .HasKey(c => new { c.CattleId, c.AnimalId });
+
+            modelBuilder.Entity<Frequency>()
+                .HasIndex(i => i.Name).IsUnique();
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿namespace FazendaBrasil.Domain
+﻿namespace FazendaBrasil.Business.ValueObjects
 {
-    public class Frequency
+    public class FrequencyVO
     {
-        public Frequency(string decription, string name, int rangeOfDays)
+        public FrequencyVO(int id, string description, string name, int rangeOfDays)
         {
-            Description = decription;
+            Id = id;
+            Description = description;
             Name = name;
             RangeOfDays = rangeOfDays;
         }
-
         public int Id { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }

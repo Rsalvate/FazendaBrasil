@@ -27,6 +27,8 @@ namespace FazendaBrasil
         {
             services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Projetos C#\FazendaBrasil\FazendaBrasil\FazendaBrasil\DataBaseFile.mdf;Integrated Security=True;Connect Timeout=30")); 
             services.AddMvc();
+                       
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
