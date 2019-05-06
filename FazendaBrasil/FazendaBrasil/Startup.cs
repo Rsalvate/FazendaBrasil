@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FazendaBrasil.Business.ApplicationService;
+using FazendaBrasil.Business.ApplicationService.Implementations;
 using FazendaBrasil.Persistence;
+using FazendaBrasil.Repository;
+using FazendaBrasil.Repository.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace FazendaBrasil
 {
@@ -27,8 +25,9 @@ namespace FazendaBrasil
         {
             services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Projetos C#\FazendaBrasil\FazendaBrasil\FazendaBrasil\DataBaseFile.mdf;Integrated Security=True;Connect Timeout=30")); 
             services.AddMvc();
-                       
 
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IFrequencyApplicationService), typeof(FrequencyApplicationService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

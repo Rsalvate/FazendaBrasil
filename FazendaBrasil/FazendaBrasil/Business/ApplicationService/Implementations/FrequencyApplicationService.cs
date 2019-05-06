@@ -1,8 +1,8 @@
 ﻿using FazendaBrasil.Business.ValueObjects;
 using FazendaBrasil.Domain;
 using FazendaBrasil.Repository;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FazendaBrasil.Business.ApplicationService.Implementations
 {
@@ -36,17 +36,31 @@ namespace FazendaBrasil.Business.ApplicationService.Implementations
 
         public IEnumerable<FrequencyVO> GetAll()
         {
-            throw new NotImplementedException();
+            var storedFrequencies = _repository.GetAll();
+
+            if (storedFrequencies == null) return null;
+
+            return storedFrequencies.Select(s => new FrequencyVO(s.Id, s.Description, s.Name, s.RangeOfDays)).ToList();
         }
 
         public void Remove(object Id)
         {
-            throw new NotImplementedException();
+            _repository.Remove(Id);
         }
 
         public FrequencyVO Update(FrequencyVO item)
         {
-            throw new NotImplementedException();
+            var storedFrequency = _repository.Find(item.Id);
+
+            if (storedFrequency == null) return null;
+
+            storedFrequency.Description = item.Description;
+            storedFrequency.Name = item.Name;
+            storedFrequency.RangeOfDays = item.RangeOfDays;
+
+            _repository.Update(storedFrequency);
+
+            return item;
         }
     }
 }

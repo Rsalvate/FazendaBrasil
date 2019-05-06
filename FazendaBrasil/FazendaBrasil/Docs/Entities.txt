@@ -1,0 +1,57 @@
+Entities 
+
+**Animal**
+- Body code
+- Description
+- Picture
+- Purchase date
+- Purchase weight
+- Selling date
+- Selling weight
+- Medications received
+- Death date
+
+**Medication**
+- Code
+- Decription
+- Purchase price
+- Purchase date
+- Usage Frequency
+
+**Site**
+- Code
+- Size
+- Description
+- Maximum capacity
+- Grass type **
+- Cattle
+
+**Frequency**
+- Code
+- Description
+- Name
+- Range of days
+
+**Cattle**
+- Code
+- Animals
+- Description
+
+**Cattle Maintenance**
+- Code
+- CattleCode
+- Animal
+- Medications
+- Comments
+- Date
+
+**Site Maintenance**
+- Code
+- Comments
+- Site
+- Date
+
+**Comments**
+- Code
+- Comment
+- Write Date
