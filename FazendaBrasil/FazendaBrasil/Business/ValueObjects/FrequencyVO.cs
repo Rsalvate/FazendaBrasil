@@ -1,6 +1,11 @@
-﻿namespace FazendaBrasil.Business.ValueObjects
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Tapioca.HATEOAS;
+
+namespace FazendaBrasil.Business.ValueObjects
 {
-    public class FrequencyVO
+    [DataContract]
+    public class FrequencyVO : ISupportsHyperMedia
     {
         public FrequencyVO(int id, string description, string name, int rangeOfDays)
         {
@@ -9,9 +14,20 @@
             Name = name;
             RangeOfDays = rangeOfDays;
         }
+
+        [DataMember(Order = 1, Name = "Code")]
         public int Id { get; set; }
+
+        [DataMember(Order = 2, Name = "Desc")]
         public string Description { get; set; }
+
+        [DataMember(Order = 3, Name = "Name")]
         public string Name { get; set; }
+
+        [DataMember(Order = 4, Name = "Days")]
         public int RangeOfDays { get; set; }
+
+        [DataMember(Order = 5)]
+        public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

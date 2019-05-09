@@ -1,13 +1,17 @@
 ﻿using FazendaBrasil.Business.ApplicationService;
 using FazendaBrasil.Business.ApplicationService.Implementations;
+using FazendaBrasil.Business.HyperMedia;
 using FazendaBrasil.Persistence;
 using FazendaBrasil.Repository;
 using FazendaBrasil.Repository.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
+using Tapioca.HATEOAS;
 
 namespace FazendaBrasil
 {
@@ -23,8 +27,23 @@ namespace FazendaBrasil
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Projetos C#\FazendaBrasil\FazendaBrasil\FazendaBrasil\DataBaseFile.mdf;Integrated Security=True;Connect Timeout=30")); 
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Projetos C#\FazendaBrasil\FazendaBrasil\FazendaBrasil\DataBaseFile.mdf;Integrated Security=True;Connect Timeout=30"));
             services.AddMvc();
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ObjectContentResponseEnricherList.Add(new FrequencyEnricher());
+            services.AddSingleton(filterOptions);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
+                        Title = "RESTfull API FAZENDA BRASIL",
+                        Version = "v1"
+                    });
+                c.EnableAnnotations();
+            });
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IFrequencyApplicationService), typeof(FrequencyApplicationService));
@@ -38,7 +57,23 @@ namespace FazendaBrasil
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FazendaBrasilApi V1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "DefaultApi",
+                    template: "{controller=Values}/{id?}"
+                );
+            });
         }
     }
 }

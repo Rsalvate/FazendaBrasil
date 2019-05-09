@@ -1,6 +1,9 @@
 ﻿using FazendaBrasil.Business.ApplicationService;
 using FazendaBrasil.Business.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using Tapioca.HATEOAS;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FazendaBrasil.Controllers
 {
@@ -15,15 +18,25 @@ namespace FazendaBrasil.Controllers
             _service = service;
         }
 
-        // GET api/Frequency/values
         [HttpGet]
+        [SwaggerResponse((200), Type = typeof(List<FrequencyVO>))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(404)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_service.GetAll());
         }
 
-        // GET api/Frequency/values/5
         [HttpGet("{id}")]
+        [SwaggerResponse((200), Type = typeof(List<FrequencyVO>))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(404)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(int id)
         {
             var frequencyVO = _service.Find(id);
@@ -34,6 +47,10 @@ namespace FazendaBrasil.Controllers
 
         // POST api/Frequency/values
         [HttpPost]
+        [SwaggerResponse((201), Type = typeof(List<FrequencyVO>))]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody]FrequencyVO frequencyVO)
         {
             if (frequencyVO == null) return BadRequest();
@@ -41,8 +58,12 @@ namespace FazendaBrasil.Controllers
             return new ObjectResult(_service.Add(frequencyVO));
         }
 
-        // PUT api/Frequency/values/5
+
         [HttpPut("{id}")]
+        [SwaggerResponse((202), Type = typeof(List<FrequencyVO>))]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody]FrequencyVO frequencyVO)
         {
             if (frequencyVO == null) return BadRequest();
@@ -50,8 +71,11 @@ namespace FazendaBrasil.Controllers
             return new ObjectResult(_service.Update(frequencyVO));
         }
 
-        // DELETE api/Frequency/values/5
         [HttpDelete("{id}")]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(int id)
         {
             _service.Remove(id);
