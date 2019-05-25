@@ -8,11 +8,11 @@ using Tapioca.HATEOAS;
 
 namespace FazendaBrasil.Business.HyperMedia
 {
-    public class FrequencyEnricher : ObjectContentResponseEnricher<FrequencyVO>
+    public class AnimalEnricher : ObjectContentResponseEnricher<AnimalVO>
     {
-        protected override Task EnrichModel(FrequencyVO content, IUrlHelper urlHelper)
+        protected override Task EnrichModel(AnimalVO content, IUrlHelper urlHelper)
         {
-            var path = "api/Frequency";
+            var path = "api/Animal";
             var url = new { controller = path, id = content.Id };
 
             content.Links.Add(new HyperMediaLink()
