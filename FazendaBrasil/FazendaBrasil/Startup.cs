@@ -1,4 +1,6 @@
-﻿using FazendaBrasil.Business.ApplicationService;
+﻿using AutoMapper;
+using FazendaBrasil.AutoMapper;
+using FazendaBrasil.Business.ApplicationService;
 using FazendaBrasil.Business.ApplicationService.Implementations;
 using FazendaBrasil.Business.HyperMedia;
 using FazendaBrasil.Persistence;
@@ -44,6 +46,14 @@ namespace FazendaBrasil
                     });
                 c.EnableAnnotations();
             });
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfiles());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IFrequencyApplicationService), typeof(FrequencyApplicationService));

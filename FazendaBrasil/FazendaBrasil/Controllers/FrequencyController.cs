@@ -55,9 +55,10 @@ namespace FazendaBrasil.Controllers
         {
             if (frequencyVO == null) return BadRequest();
 
-            return new ObjectResult(_service.Add(frequencyVO));
-        }
+            var newFrequency = _service.Add(frequencyVO);
 
+            return Ok(_service.Find(newFrequency.Id));
+        }
 
         [HttpPut("{id}")]
         [SwaggerResponse((202), Type = typeof(List<FrequencyVO>))]
@@ -68,7 +69,7 @@ namespace FazendaBrasil.Controllers
         {
             if (frequencyVO == null) return BadRequest();
 
-            return new ObjectResult(_service.Update(frequencyVO));
+            return Ok(_service.Update(frequencyVO));
         }
 
         [HttpDelete("{id}")]

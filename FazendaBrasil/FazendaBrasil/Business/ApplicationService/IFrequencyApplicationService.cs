@@ -8,7 +8,7 @@ namespace FazendaBrasil.Business.ApplicationService
         FrequencyVO Add(FrequencyVO item);
         FrequencyVO Update(FrequencyVO item);
         void Remove(object Id);
-        IEnumerable<FrequencyVO> GetAll();
+        List<FrequencyVO> GetAll();
         FrequencyVO Find(object Id);
     }
 }

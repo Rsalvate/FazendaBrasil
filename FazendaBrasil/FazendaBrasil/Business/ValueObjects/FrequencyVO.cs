@@ -13,6 +13,7 @@ namespace FazendaBrasil.Business.ValueObjects
             Description = description;
             Name = name;
             RangeOfDays = rangeOfDays;
+            Links = new List<HyperMediaLink>();
         }
 
         [DataMember(Order = 1, Name = "Code")]
@@ -27,7 +28,7 @@ namespace FazendaBrasil.Business.ValueObjects
         [DataMember(Order = 4, Name = "Days")]
         public int RangeOfDays { get; set; }
 
-        [DataMember(Order = 5)]
+        [DataMember(Order = 5, IsRequired = false)]
         public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }
